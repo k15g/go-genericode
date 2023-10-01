@@ -18,6 +18,12 @@ func TestUnmarshalPeppolICD(t *testing.T) {
 	assert.Equal(t, *cl.Keys[0].Id, "schemeidKey")
 	assert.Equal(t, *cl.Rows[0].Values[0].Value, "FR:SIRENE")
 
+	assert.NotNil(t, cl.Column("schemeid"))
+	assert.Nil(t, cl.Column("schemeid-unknown"))
+
+	assert.Equal(t, *cl.Rows[0].Get("schemeid"), "FR:SIRENE")
+	assert.Nil(t, cl.Rows[0].Get("schemeid-unknown"))
+
 	if false {
 		content, _ := json.Marshal(&cl)
 		os.WriteFile("test.json", content, os.ModePerm)

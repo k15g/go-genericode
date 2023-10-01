@@ -7,5 +7,5 @@ func Marshal(codeList any) ([]byte, error) {
 	// TODO Add XML header
 	// TODO Fix self-closing tags
 
-	return xml.Marshal(codeList)
+	return xml.MarshalIndent(codeList, "", "\t")
 }
