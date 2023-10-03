@@ -25,10 +25,10 @@ func TestUnmarshalPeppolICD(t *testing.T) {
 	assert.Nil(t, cl.Rows[0].Get("schemeid-unknown"))
 
 	if false {
-		content, _ := json.Marshal(&cl)
+		content, _ := json.Marshal(cl)
 		os.WriteFile("test.json", content, os.ModePerm)
 
-		content, _ = Marshal(&cl)
+		content, _ = Marshal(cl)
 		os.WriteFile("test.xml", content, os.ModePerm)
 	}
 }
