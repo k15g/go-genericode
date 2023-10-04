@@ -32,3 +32,17 @@ func TestUnmarshalPeppolICD(t *testing.T) {
 		os.WriteFile("test.xml", content, os.ModePerm)
 	}
 }
+
+func TestUBLSignatureEntites(t *testing.T) {
+	cl, err := UnmarshalFile("testdata/UBL-Signature-Entities-2.3.gc")
+	assert.Nil(t, err)
+	assert.NotNil(t, cl)
+
+	assert.Equal(t, "en", *cl.Identification.Agency.LongName[0].Language)
+	assert.Equal(t, "UBL", *cl.Identification.Agency.Identifier[0])
+
+	if false {
+		content, _ := Marshal(cl)
+		os.WriteFile("UBL-Signature-Entities-2.3-exported.gc", content, os.ModePerm)
+	}
+}
