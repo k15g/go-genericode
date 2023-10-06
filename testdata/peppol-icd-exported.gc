@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gc:CodeList xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/">
+	<Annotation>
+		<AppInfo>
+      <ext:info xmlns:ext="urn:peppol.eu:codelist:gc-annotation">This is an OpenPeppol eDEC Code List.
+Official source: https://docs.peppol.eu/edelivery/codelists/
+
+This file was automatically generated.
+Do NOT edit!</ext:info>
+    </AppInfo>
+	</Annotation>
 	<Identification>
 		<ShortName>Peppol Code Lists - Participant identifier schemes</ShortName>
 		<Version>8.6</Version>

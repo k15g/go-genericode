@@ -10,7 +10,9 @@ type Genericode struct {
 type CodeList struct {
 	Genericode
 
-	XMLName        xml.Name        `xml:"http://docs.oasis-open.org/codelist/ns/genericode/1.0/ CodeList"`
+	XMLName xml.Name `xml:"http://docs.oasis-open.org/codelist/ns/genericode/1.0/ CodeList"`
+
+	Annotation     *Annotation     `xml:"Annotation"`
 	Identification *Identification `xml:"Identification"`
 	Columns        []*Column       `xml:"ColumnSet>Column"`
 	Keys           []*Key          `xml:"ColumnSet>Key"`
@@ -53,6 +55,7 @@ type Agency struct {
 }
 
 type Column struct {
+	Annotation          *Annotation         `xml:"Annotation"`
 	Id                  *string             `xml:"Id,attr"`  // Required
 	Use                 *string             `xml:"Use,attr"` // Required
 	ShortName           *TranslatableName   `xml:"ShortName"`
@@ -65,6 +68,7 @@ type Column struct {
 }
 
 type Key struct {
+	Annotation          *Annotation         `xml:"Annotation"`
 	Id                  *string             `xml:"Id,attr"` // Required
 	ShortName           *TranslatableName   `xml:"ShortName"`
 	LongName            []*TranslatableName `xml:"LongName"`
@@ -76,13 +80,14 @@ type Key struct {
 }
 
 type Row struct {
-	Values []*Value `xml:"Value"`
+	Annotation *Annotation `xml:"Annotation"`
+	Values     []*Value    `xml:"Value"`
 }
 
 func (row *Row) Get(column string) *string {
 	for _, value := range row.Values {
 		if *value.ColumnRef == column {
-			return value.Value
+			return value.SimpleValue
 		}
 	}
 
@@ -90,8 +95,10 @@ func (row *Row) Get(column string) *string {
 }
 
 type Value struct {
-	ColumnRef *string `xml:"ColumnRef,attr"`
-	Value     *string `xml:"SimpleValue"`
+	Annotation   *Annotation `xml:"Annotation"`
+	ColumnRef    *string     `xml:"ColumnRef,attr"`
+	SimpleValue  *string     `xml:"SimpleValue"`
+	ComplexValue *AnyContent `xml:"ComplexValue"`
 }
 
 type TranslatableName struct {
@@ -113,10 +120,25 @@ type DatatypeFacet struct {
 }
 
 type ColumnRef struct {
-	Ref *string `xml:"Ref,attr"`
+	Annotation *Annotation `xml:"Annotation"`
+	Ref        *string     `xml:"Ref,attr"`
 }
 
 type MimeTypedUri struct {
 	URI      string  `xml:",chardata"` // Required
 	MimeType *string `xml:"MimeType,attr"`
+}
+
+type Annotation struct {
+	Description []*AnyLanguageContent `xml:"Description"`
+	AppInfo     *AnyContent           `xml:"AppInfo"`
+}
+
+type AnyContent struct {
+	Content string `xml:",innerxml"`
+}
+
+type AnyLanguageContent struct {
+	Content  string  `xml:",innerxml"`
+	Language *string `xml:"http://www.w3.org/XML/1998/namespace lang,attr"`
 }

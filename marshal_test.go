@@ -18,5 +18,7 @@ func TestMarshalSimple(t *testing.T) {
 
 	assert.Equal(t, expected, content)
 
-	// os.WriteFile("testdata/peppol-icd-exported.gc", content, os.ModePerm)
+	if writeDuringTests {
+		os.WriteFile("testdata/peppol-icd-exported.gc", content, os.ModePerm)
+	}
 }
